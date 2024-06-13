@@ -64,7 +64,7 @@ struct GridSearchPrimitives {
 
 class GridSearch {
  public:
-  enum class SearchType { A_STAR, DP };
+  enum class SearchType { kAStar, kDP };
 
   GridSearch() = default;
   virtual ~GridSearch();

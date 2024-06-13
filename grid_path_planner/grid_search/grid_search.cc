@@ -78,7 +78,7 @@ void GridSearch::Clear() {
   // clear closed list
   closed_list_.clear();
   closed_list_.resize(max_grid_x_ * max_grid_y_,
-                      common::Node::NodeStatus::OPEN);
+                      common::Node::NodeStatus::kOpen);
 
   start_node_ = nullptr;
   end_node_ = nullptr;
@@ -122,7 +122,7 @@ bool GridSearch::GenerateGridPath(
     CHECK_NOTNULL(node);
     CHECK_NE(node->g(), common::kInfiniteCost);
     closed_list_[CalcGridXYIndex(node->grid_x(), node->grid_y())] =
-        common::Node::NodeStatus::CLOSED;
+        common::Node::NodeStatus::kClosed;
 
     // new expand
     ++explored_node_num;
@@ -141,7 +141,7 @@ bool GridSearch::GenerateGridPath(
     LOG(ERROR) << "Grid searching return infinite cost (open_list ran out)";
     return false;
   }
-  if (search_type_ == SearchType::A_STAR) {
+  if (search_type_ == SearchType::kAStar) {
     LoadGridAStarResult(result);
   }
   return true;
@@ -169,7 +169,7 @@ int GridSearch::CalcGridXYIndex(const int grid_x, const int grid_y) const {
 
 int GridSearch::GetKey(const Node2d* node) const {
   CHECK_NOTNULL(node);
-  return search_type_ == SearchType::A_STAR ? node->g() + node->h() : node->g();
+  return search_type_ == SearchType::kAStar ? node->g() + node->h() : node->g();
 }
 
 int GridSearch::GetActionCost(int curr_x, int curr_y, int action_id) const {
@@ -374,7 +374,7 @@ void GridSearch::UpdateSuccs(const Node2d* curr_node) {
       continue;
     }
     if (closed_list_[CalcGridXYIndex(succ_x, succ_y)] ==
-        common::Node::NodeStatus::CLOSED) {
+        common::Node::NodeStatus::kClosed) {
       continue;
     }
     // get action cost
@@ -443,10 +443,10 @@ int GridSearch::CheckDpMap(const int grid_x, const int grid_y) {
 float GridSearch::GetTerminationFactor(SearchType search_type) {
   float term_factor = 0.0F;
   switch (search_type) {
-    case SearchType::A_STAR:
+    case SearchType::kAStar:
       term_factor = 1.0F;
       break;
-    case SearchType::DP:
+    case SearchType::kDP:
       term_factor = 0.0F;
       break;
     default:

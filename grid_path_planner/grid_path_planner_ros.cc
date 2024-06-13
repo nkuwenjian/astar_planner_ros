@@ -78,7 +78,7 @@ void GridPathPlannerROS::initialize(std::string name,
   grid_path_planner_->Init(static_cast<int>(costmap_2d_->getSizeInCellsX()),
                            static_cast<int>(costmap_2d_->getSizeInCellsY()),
                            costmap_2d_->getResolution(), circumscribed_cost_,
-                           grid_search::GridSearch::SearchType::A_STAR);
+                           grid_search::GridSearch::SearchType::kAStar);
 
   plan_pub_ = private_nh.advertise<nav_msgs::Path>("grid_path", 1);
 

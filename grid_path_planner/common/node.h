@@ -38,7 +38,7 @@ namespace common {
 
 class Node {
  public:
-  enum class NodeStatus { OPEN, CLOSED };
+  enum class NodeStatus { kOpen, kClosed };
 
   Node() = default;
   virtual ~Node() = default;
